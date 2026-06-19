@@ -4,6 +4,8 @@ using System.Text;
 using UserService.Application.Interfaces;
 using UserService.Domain.Entities;
 using UserService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using SharedLibrary.Exceptions;
 
 namespace UserService.Infrastructure.Repositories
 {
@@ -14,10 +16,23 @@ namespace UserService.Infrastructure.Repositories
         {
             _context = context;
         }
+
+        public async Task<User?> LoginUser(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        }
+
         public async Task<bool> RegisterUser(User user)
         {
-            await _context.Users.AddAsync(user);
+            var existingUser = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == user.Email);
 
+            if (existingUser != null)
+            {
+                return false;
+            }
+
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
             return true;

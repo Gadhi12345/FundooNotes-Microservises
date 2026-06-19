@@ -1,10 +1,24 @@
 <Solution>
   <Folder Name="/src/" />
+  <Folder Name="/src/ApiGateway/">
+    <Project Path="src/ApiGateway/OcelotGateway/OcelotGateway.csproj" />
+  </Folder>
   <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/NotesService/">
+    <Project Path="src/Services/NotesService/NotesService.API/NotesService.API.csproj" />
+    <Project Path="src/Services/NotesService/NotesService.Application/NotesService.Application.csproj" />
+    <Project Path="src/Services/NotesService/NotesService.Domain/NotesService.Domain.csproj" />
+    <Project Path="src/Services/NotesService/NotesService.Infrastructure/NotesService.Infrastructure.csproj" />
+  </Folder>
   <Folder Name="/src/Services/UserService/">
     <Project Path="src/Services/UserService/UserService.API/UserService.API.csproj" />
     <Project Path="src/Services/UserService/UserService.Application/UserService.Application.csproj" />
     <Project Path="src/Services/UserService/UserService.Domain/UserService.Domain.csproj" />
     <Project Path="src/Services/UserService/UserService.Infrastructure/UserService.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/SharedLibrary/">
+    <Project Path="src/SharedLibrary/SharedLibrary.Contracts/SharedLibrary.Contracts.csproj" />
+    <Project Path="src/SharedLibrary/SharedLibrary.Exceptions/SharedLibrary.Exceptions.csproj" />
+    <Project Path="src/SharedLibrary/SharedLibrary.Messaging/SharedLibrary.Messaging.csproj" />
   </Folder>
 </Solution>

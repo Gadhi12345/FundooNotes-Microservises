@@ -21,7 +21,7 @@ namespace UserService.Application.Handlers
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
-                Password = request.Password,
+                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 MobileNumber = request.MobileNumber
             };
 

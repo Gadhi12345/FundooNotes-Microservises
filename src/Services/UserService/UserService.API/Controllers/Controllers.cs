@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Commands;
 
@@ -22,10 +23,35 @@ namespace UserService.API.Controllers
 
             if (!result)
             {
-                return BadRequest("Registration Failed");
+                return BadRequest(new
+                {
+                    Message = "Email already exists"
+                });
             }
 
-            return Ok("User Registered Successfully");
+            return Ok(new
+            {
+                Message = "User registered successfully"
+            });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginUserCommand command)
+        {
+            var token = await _mediator.Send(command);
+
+            if (string.IsNullOrEmpty(token))
+            {
+                return BadRequest("Invalid Email or Password");
+            }
+
+            return Ok(token);
+        }
+        [Authorize]
+        [HttpGet("profile")]
+        public IActionResult Profile()
+        {
+            return Ok("Authorized User");
         }
     }
 }

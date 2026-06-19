@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\UserService.Application\UserService.Application.csproj" />
     <ProjectReference Include="..\UserService.Domain\UserService.Domain.csproj" />
+    <ProjectReference Include="..\..\..\SharedLibrary\SharedLibrary.Exceptions\SharedLibrary.Exceptions.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

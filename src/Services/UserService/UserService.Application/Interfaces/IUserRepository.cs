@@ -8,5 +8,6 @@ namespace UserService.Application.Interfaces
     public interface IUserRepository
     {
         Task<bool> RegisterUser(User user);
+        Task<User?> LoginUser(string email);
     }
 }
