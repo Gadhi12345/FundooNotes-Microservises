@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace UserService.Application.DTOs
+namespace UserService.Application.Commands
 {
-    public class RegisterUserDto
+    public class RegisterUserCommand : IRequest<bool>
     {
         public string FirstName { get; set; } = string.Empty;
 

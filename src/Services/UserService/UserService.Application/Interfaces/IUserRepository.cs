@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UserService.Domain.Entities;
 
 namespace UserService.Application.Interfaces
 {
-    internal interface IUserService
+    public interface IUserRepository
     {
+        Task<bool> RegisterUser(User user);
     }
 }
