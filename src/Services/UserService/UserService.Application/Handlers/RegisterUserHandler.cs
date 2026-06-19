@@ -8,10 +8,11 @@ namespace UserService.Application.Handlers
     public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, bool>
     {
         private readonly IUserRepository _userRepository;
-
-        public RegisterUserHandler(IUserRepository userRepository)
+        private readonly IEmailService _emailService;
+        public RegisterUserHandler(IUserRepository userRepository, IEmailService emailService)
         {
             _userRepository = userRepository;
+            _emailService = emailService;
         }
 
         public async Task<bool> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -25,7 +26,17 @@ namespace UserService.Application.Handlers
                 MobileNumber = request.MobileNumber
             };
 
-            return await _userRepository.RegisterUser(user);
+           var result = await _userRepository.RegisterUser(user);
+
+if (result)
+{
+    await _emailService.SendEmailAsync(
+        request.Email,
+        "Welcome to User Service",
+        "User Registered Successfully");
+}
+
+return result;
         }
     }
 }
