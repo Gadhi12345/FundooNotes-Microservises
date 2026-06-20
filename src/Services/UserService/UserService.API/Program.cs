@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SharedLibrary.Exceptions;
 using System.Text;
 using UserService.Application.Interfaces;
 using UserService.Application.Services;
@@ -51,7 +52,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddProblemDetails();
-
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -59,7 +60,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -29,7 +29,7 @@ namespace UserService.Infrastructure.Repositories
 
             if (existingUser != null)
             {
-                return false;
+                throw new ConflictException("Email already exists");
             }
 
             await _context.Users.AddAsync(user);
