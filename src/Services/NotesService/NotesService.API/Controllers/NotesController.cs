@@ -48,7 +48,7 @@ namespace NotesService.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("note/{id}")]
         public async Task<IActionResult> GetNoteById(long id)
         {
             var userId =
@@ -102,6 +102,18 @@ namespace NotesService.API.Controllers
                 userId);
 
             var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+        [HttpGet("trash")]
+        public async Task<IActionResult> GetTrashedNotes()
+        {
+            var userId = Convert.ToInt64(
+                User.FindFirst("UserId")?.Value);
+
+            var query = new GetTrashedNotesQuery(userId);
+
+            var result = await _mediator.Send(query);
 
             return Ok(result);
         }

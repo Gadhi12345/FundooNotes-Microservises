@@ -37,6 +37,13 @@ namespace NotesService.Infrastructure.Repositories
          .ToListAsync();
         }
 
+        public async Task<List<Note>> GetTrashedNotes(long userId)
+        {
+            return await _context.Notes
+        .Where(x => x.UserId == userId && x.IsTrash)
+        .ToListAsync();
+        }
+
         public async Task<bool> MoveToTrash(long noteId, long userId)
         {
 
