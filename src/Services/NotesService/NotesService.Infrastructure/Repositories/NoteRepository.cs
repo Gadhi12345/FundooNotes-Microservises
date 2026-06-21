@@ -21,5 +21,12 @@ namespace NotesService.Infrastructure.Repositories
 
             return true;
         }
+
+        public async Task<List<Note>> GetNotesByUserId(long userId)
+        {
+            return await _context.Notes
+         .Where(x => x.UserId == userId)
+         .ToListAsync();
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace NotesService.Application.Interfaces
     public interface INoteRepository
     {
         Task<bool> CreateNote(Note note);
+        Task<List<Note>> GetNotesByUserId(long userId);
     }
 }

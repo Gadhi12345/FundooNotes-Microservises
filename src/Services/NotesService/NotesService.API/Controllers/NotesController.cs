@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NotesService.Application.Commands;
 using NotesService.Application.DTOs;
+using NotesService.Application.Queries;
 
 namespace NotesService.API.Controllers
 {
@@ -30,6 +31,19 @@ namespace NotesService.API.Controllers
             );
 
             var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMyNotes()
+        {
+            var userId =
+                Convert.ToInt64(User.FindFirst("UserId")?.Value);
+
+            var query = new GetMyNotesQuery(userId);
+
+            var result = await _mediator.Send(query);
 
             return Ok(result);
         }
