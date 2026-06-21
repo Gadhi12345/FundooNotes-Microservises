@@ -90,5 +90,20 @@ namespace NotesService.API.Controllers
 
             return Ok("Note Updated Successfully");
         }
+
+        [HttpPut("trash/{noteId}")]
+        public async Task<IActionResult> MoveToTrash(long noteId)
+        {
+            var userId = Convert.ToInt64(
+                User.FindFirst("UserId")?.Value);
+
+            var command = new MoveToTrashCommand(
+                noteId,
+                userId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
     }
 }

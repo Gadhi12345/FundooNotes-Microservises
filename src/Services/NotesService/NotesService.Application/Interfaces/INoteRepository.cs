@@ -11,5 +11,6 @@ namespace NotesService.Application.Interfaces
         Task<List<Note>> GetNotesByUserId(long userId);
         Task<Note?> GetNoteById(long noteId, long userId);
         Task<bool> UpdateNote(long noteId,long userId,string title,string description);
+        Task<bool> MoveToTrash(long noteId, long userId);
     }
 }

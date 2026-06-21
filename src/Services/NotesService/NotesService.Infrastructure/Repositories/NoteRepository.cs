@@ -37,6 +37,23 @@ namespace NotesService.Infrastructure.Repositories
          .ToListAsync();
         }
 
+        public async Task<bool> MoveToTrash(long noteId, long userId)
+        {
+
+            var note = await _context.Notes
+                .FirstOrDefaultAsync(x => x.NoteId == noteId && x.UserId == userId);
+
+            if (note == null)
+                return false;
+
+            note.IsTrash = true;
+            note.ModifiedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<bool> UpdateNote(long noteId, long userId, string title, string description)
         {
             var note = await _context.Notes
