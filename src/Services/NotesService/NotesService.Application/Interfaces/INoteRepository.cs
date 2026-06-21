@@ -13,5 +13,10 @@ namespace NotesService.Application.Interfaces
         Task<bool> UpdateNote(long noteId,long userId,string title,string description);
         Task<bool> MoveToTrash(long noteId, long userId);
         Task<List<Note>> GetTrashedNotes(long userId);
+        Task<bool> RestoreNote(long noteId, long userId);
+        Task<bool> DeleteNote(long noteId, long userId);
+        Task<bool> ArchiveNote(long noteId, long userId);
+        Task<List<Note>> GetArchivedNotes(long userId);
+        Task<bool> PinNote(long noteId, long userId);
     }
 }

@@ -117,5 +117,78 @@ namespace NotesService.API.Controllers
 
             return Ok(result);
         }
+
+        [HttpPut("restore/{noteId}")]
+        public async Task<IActionResult> RestoreNote(long noteId)
+        {
+            var userId = Convert.ToInt64(
+                User.FindFirst("UserId")?.Value);
+
+            var command = new RestoreNoteCommand(
+                noteId,
+                userId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{noteId}")]
+        public async Task<IActionResult> DeleteNote(long noteId)
+        {
+            var userId = Convert.ToInt64(
+                User.FindFirst("UserId")?.Value);
+
+            var command = new DeleteNoteCommand(
+                noteId,
+                userId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPut("archive/{noteId}")]
+        public async Task<IActionResult> ArchiveNote(long noteId)
+        {
+            var userId = Convert.ToInt64(
+                User.FindFirst("UserId")?.Value);
+
+            var command = new ArchiveNoteCommand(
+                noteId,
+                userId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpGet("archive")]
+        public async Task<IActionResult> GetArchivedNotes()
+        {
+            var userId = Convert.ToInt64(
+                User.FindFirst("UserId")?.Value);
+
+            var query = new GetArchivedNotesQuery(userId);
+
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
+
+        [HttpPut("pin/{noteId}")]
+        public async Task<IActionResult> PinNote(long noteId)
+        {
+            var userId = Convert.ToInt64(
+                User.FindFirst("UserId")?.Value);
+
+            var command = new PinNoteCommand(
+                noteId,
+                userId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
     }
 }
