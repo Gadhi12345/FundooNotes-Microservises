@@ -47,5 +47,24 @@ namespace NotesService.API.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetNoteById(long id)
+        {
+            var userId =
+                Convert.ToInt64(
+                    User.FindFirst("UserId")?.Value);
+
+            var query =
+                new GetNoteByIdQuery(id, userId);
+
+            var note =
+                await _mediator.Send(query);
+
+            if (note == null)
+                return NotFound("Note not found");
+
+            return Ok(note);
+        }
     }
 }
