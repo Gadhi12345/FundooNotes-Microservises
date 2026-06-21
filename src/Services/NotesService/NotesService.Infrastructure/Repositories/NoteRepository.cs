@@ -36,5 +36,23 @@ namespace NotesService.Infrastructure.Repositories
          .Where(x => x.UserId == userId)
          .ToListAsync();
         }
+
+        public async Task<bool> UpdateNote(long noteId, long userId, string title, string description)
+        {
+            var note = await _context.Notes
+        .FirstOrDefaultAsync(x =>
+            x.NoteId == noteId &&
+            x.UserId == userId);
+
+            if (note == null)
+                return false;
+
+            note.Title = title;
+            note.Description = description;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

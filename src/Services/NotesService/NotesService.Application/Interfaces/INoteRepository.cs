@@ -10,5 +10,6 @@ namespace NotesService.Application.Interfaces
         Task<bool> CreateNote(Note note);
         Task<List<Note>> GetNotesByUserId(long userId);
         Task<Note?> GetNoteById(long noteId, long userId);
+        Task<bool> UpdateNote(long noteId,long userId,string title,string description);
     }
 }

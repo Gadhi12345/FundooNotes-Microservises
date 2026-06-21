@@ -66,5 +66,29 @@ namespace NotesService.API.Controllers
 
             return Ok(note);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateNote(
+    long id,
+    UpdateNoteRequest request)
+        {
+            var userId =
+                Convert.ToInt64(
+                    User.FindFirst("UserId")?.Value);
+
+            var command = new UpdateNoteCommand(
+                id,
+                userId,
+                request.Title,
+                request.Description);
+
+            var result =
+                await _mediator.Send(command);
+
+            if (!result)
+                return NotFound("Note not found");
+
+            return Ok("Note Updated Successfully");
+        }
     }
 }
