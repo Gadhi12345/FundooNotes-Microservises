@@ -12,8 +12,7 @@ namespace CollaboratorService.Application.Interfaces
 
         Task<List<CollaboratorResponseDto>> GetCollaboratorsByNoteId(long noteId);
 
-        Task<bool> RemoveCollaborator(long noteId, string collaboratorEmail);
-
+        Task<bool> RemoveCollaborator(long noteId,string collaboratorEmail);
         Task<List<Collaborator>> GetSharedNotes(string collaboratorEmail);
     }
 }

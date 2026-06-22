@@ -52,4 +52,20 @@ public class CollaboratorController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpDelete("{noteId}/{collaboratorEmail}")]
+    public async Task<IActionResult> RemoveCollaborator(
+      long noteId,
+      string collaboratorEmail)
+    {
+        var result = await _mediator.Send(
+            new RemoveCollaboratorCommand(
+                noteId,
+                collaboratorEmail));
+
+        if (!result)
+            return NotFound("Collaborator not found");
+
+        return Ok("Collaborator removed successfully");
+    }
 }

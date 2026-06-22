@@ -36,9 +36,20 @@ namespace CollaboratorService.Infrastructure.Repositories
 
         }
 
-        public Task<bool> RemoveCollaborator(long noteId, string collaboratorEmail)
+        public async Task<bool> RemoveCollaborator(long noteId, string collaboratorEmail)
         {
-            throw new NotImplementedException();
+            var collaborator = await _context.Collaborators.FirstOrDefaultAsync(c =>
+           c.NoteId == noteId &&
+           c.CollaboratorEmail == collaboratorEmail);
+
+            if (collaborator == null)
+                return false;
+
+            _context.Collaborators.Remove(collaborator);
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
     
