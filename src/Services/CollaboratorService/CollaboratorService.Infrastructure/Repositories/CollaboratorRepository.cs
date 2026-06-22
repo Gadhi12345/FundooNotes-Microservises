@@ -1,4 +1,5 @@
-﻿using CollaboratorService.Application.Interfaces;
+﻿using CollaboratorService.Application.DTOs;
+using CollaboratorService.Application.Interfaces;
 using CollaboratorService.Domain.Entities;
 using CollaboratorService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -25,29 +26,8 @@ namespace CollaboratorService.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<List<Collaborator>> GetCollaborators(long noteId)
-        {
-            return await _context.Collaborators
-                .Where(x => x.NoteId == noteId)
-                .ToListAsync();
-        }
 
-        public async Task<bool> RemoveCollaborator(long noteId, string collaboratorEmail)
-        {
-            var collaborator = await _context.Collaborators
-                .FirstOrDefaultAsync(x =>
-                    x.NoteId == noteId &&
-                    x.CollaboratorEmail == collaboratorEmail);
-
-            if (collaborator == null)
-                return false;
-
-            _context.Collaborators.Remove(collaborator);
-
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
+      
 
         public async Task<List<Collaborator>> GetSharedNotes(string collaboratorEmail)
         {
@@ -56,6 +36,25 @@ namespace CollaboratorService.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-     
+        public Task<bool> RemoveCollaborator(long noteId, string collaboratorEmail)
+        {
+            throw new NotImplementedException();
+        }
+
+    
+
+        public async Task<List<CollaboratorResponseDto>> GetCollaboratorsByNoteId(long noteId)
+        {
+            return await _context.Collaborators
+         .Where(c => c.NoteId == noteId)
+         .Select(c => new CollaboratorResponseDto
+         {
+             CollaboratorId = c.Id,
+             UserId = c.OwnerUserId,
+             Email = c.CollaboratorEmail,
+             Permission = c.Permission
+         })
+         .ToListAsync();
+        }
     }
 }

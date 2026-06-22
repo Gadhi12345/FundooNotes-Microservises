@@ -1,5 +1,6 @@
 ﻿using CollaboratorService.Application.Commands;
 using CollaboratorService.Application.DTOs;
+using CollaboratorService.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,5 +32,15 @@ public class CollaboratorController : ControllerBase
             return BadRequest();
 
         return Ok("Collaborator added successfully");
+    }
+
+    [HttpGet("{noteId}")]
+    public async Task<IActionResult> GetCollaboratorsByNoteId(
+    long noteId)
+    {
+        var result = await _mediator.Send(
+            new GetCollaboratorsByNoteIdQuery(noteId));
+
+        return Ok(result);
     }
 }

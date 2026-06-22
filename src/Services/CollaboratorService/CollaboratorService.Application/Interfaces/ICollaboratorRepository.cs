@@ -1,4 +1,5 @@
-﻿using CollaboratorService.Domain.Entities;
+﻿using CollaboratorService.Application.DTOs;
+using CollaboratorService.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace CollaboratorService.Application.Interfaces
     {
         Task<bool> AddCollaborator(Collaborator collaborator);
 
-        Task<List<Collaborator>> GetCollaborators(long noteId);
+        Task<List<CollaboratorResponseDto>> GetCollaboratorsByNoteId(long noteId);
 
         Task<bool> RemoveCollaborator(long noteId, string collaboratorEmail);
 

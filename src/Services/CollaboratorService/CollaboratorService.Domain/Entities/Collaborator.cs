@@ -18,5 +18,6 @@ namespace CollaboratorService.Domain.Entities
         public string Permission { get; set; } = "VIEW";
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+      
     }
 }
