@@ -3,38 +3,33 @@ using CollaboratorService.Application.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
-namespace CollaboratorService.API.Controllers
+[Route("api/[controller]")]
+[ApiController]
+[Authorize]
+public class CollaboratorController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
-    public class CollaboratorController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public CollaboratorController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public CollaboratorController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+    [HttpPost]
+    public async Task<IActionResult> AddCollaborator(
+        AddCollaboratorRequest request)
+    {
+        long ownerUserId = 1;
 
-        [HttpPost]
-        public async Task<IActionResult> AddCollaborator(
-            AddCollaboratorRequest request)
-        {
-            long ownerUserId = Convert.ToInt64(
-                User.FindFirstValue("UserId"));
+        var result = await _mediator.Send(
+            new AddCollaboratorCommand(
+                ownerUserId,
+                request));
 
-            var result = await _mediator.Send(
-                new AddCollaboratorCommand(
-                    ownerUserId,
-                    request));
+        if (!result)
+            return BadRequest();
 
-            if (!result)
-                return BadRequest();
-
-            return Ok("Collaborator added successfully");
-        }
+        return Ok("Collaborator added successfully");
     }
 }

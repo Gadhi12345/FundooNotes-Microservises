@@ -13,7 +13,7 @@ namespace CollaboratorService.Domain.Entities
 
         public long OwnerUserId { get; set; }
 
-        public long CollaboratorUserId { get; set; }
+        public string CollaboratorEmail { get; set; } = string.Empty;
 
         public string Permission { get; set; } = "VIEW";
 

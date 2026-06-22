@@ -9,5 +9,6 @@ namespace UserService.Application.Interfaces
     {
         Task<bool> RegisterUser(User user);
         Task<User?> LoginUser(string email);
+        Task<User?> GetUserByEmail(string email);
     }
 }

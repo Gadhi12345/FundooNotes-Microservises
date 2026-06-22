@@ -8,7 +8,7 @@ namespace CollaboratorService.Application.DTOs
     {
         public long NoteId { get; set; }
 
-        public long CollaboratorUserId { get; set; }
+        public string CollaboratorEmail { get; set; } = string.Empty;
 
         public string Permission { get; set; } = "VIEW";
     }

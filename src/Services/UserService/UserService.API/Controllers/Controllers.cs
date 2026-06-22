@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Commands;
+using UserService.Application.Queries;
 
 namespace UserService.API.Controllers
 {
@@ -53,6 +54,22 @@ namespace UserService.API.Controllers
         public IActionResult Profile()
         {
             return Ok("Authorized User");
+        }
+
+        [HttpGet("email/{email}")]
+        public async Task<IActionResult> GetUserByEmail(string email)
+        {
+            var user = await _mediator.Send(
+                new GetUserByEmailQuery(email));
+
+            if (user == null)
+                return NotFound("User not found");
+
+            return Ok(new
+            {
+                user.UserId,
+                user.Email
+            });
         }
     }
 }

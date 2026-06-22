@@ -32,12 +32,12 @@ namespace CollaboratorService.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<bool> RemoveCollaborator(long noteId, long collaboratorUserId)
+        public async Task<bool> RemoveCollaborator(long noteId, string collaboratorEmail)
         {
             var collaborator = await _context.Collaborators
                 .FirstOrDefaultAsync(x =>
                     x.NoteId == noteId &&
-                    x.CollaboratorUserId == collaboratorUserId);
+                    x.CollaboratorEmail == collaboratorEmail);
 
             if (collaborator == null)
                 return false;
@@ -49,11 +49,13 @@ namespace CollaboratorService.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<List<Collaborator>> GetSharedNotes(long collaboratorUserId)
+        public async Task<List<Collaborator>> GetSharedNotes(string collaboratorEmail)
         {
-            return await _context.Collaborators
-                .Where(x => x.CollaboratorUserId == collaboratorUserId)
+            return await _context.Collaborators.
+                Where(x => x.CollaboratorEmail == collaboratorEmail)
                 .ToListAsync();
         }
+
+     
     }
 }

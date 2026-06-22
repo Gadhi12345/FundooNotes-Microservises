@@ -11,8 +11,35 @@
           "Port": 7007
         }
       ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/Collaborator/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/Collaborator/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7061
+        }
+      ]
+    },
+
+    {
+      "UpstreamPathTemplate": "/api/Notes/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "DownstreamPathTemplate": "/api/Notes/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7140
+        }
+      ]
     }
   ],
+
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:7111"
   }

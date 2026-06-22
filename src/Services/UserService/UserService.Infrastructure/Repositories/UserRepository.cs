@@ -17,6 +17,12 @@ namespace UserService.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<User?> GetUserByEmail(string email)
+        {
+            return await _context.Users
+         .FirstOrDefaultAsync(x => x.Email == email);
+        }
+
         public async Task<User?> LoginUser(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);

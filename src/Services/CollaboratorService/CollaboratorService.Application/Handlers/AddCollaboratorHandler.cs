@@ -9,21 +9,34 @@ namespace CollaboratorService.Application.Handlers
         : IRequestHandler<AddCollaboratorCommand, bool>
     {
         private readonly ICollaboratorRepository _repository;
+        private readonly IUserServiceClient _userServiceClient;
 
-        public AddCollaboratorHandler(ICollaboratorRepository repository)
+        public AddCollaboratorHandler(
+            ICollaboratorRepository repository,
+            IUserServiceClient userServiceClient)
         {
             _repository = repository;
+            _userServiceClient = userServiceClient;
         }
 
         public async Task<bool> Handle(
             AddCollaboratorCommand request,
             CancellationToken cancellationToken)
         {
+            var user =
+                await _userServiceClient.GetUserIdByEmail(
+                    request.Request.CollaboratorEmail);
+
+            if (user == null)
+            {
+                return false;
+            }
+
             var collaborator = new Collaborator
             {
                 NoteId = request.Request.NoteId,
                 OwnerUserId = request.OwnerUserId,
-                CollaboratorUserId = request.Request.CollaboratorUserId,
+                CollaboratorEmail = request.Request.CollaboratorEmail,
                 Permission = request.Request.Permission
             };
 
