@@ -31,9 +31,9 @@ namespace CollaboratorService.Infrastructure.Repositories
 
         public async Task<List<Collaborator>> GetSharedNotes(string collaboratorEmail)
         {
-            return await _context.Collaborators.
-                Where(x => x.CollaboratorEmail == collaboratorEmail)
+            return await _context.Collaborators.Where(x => x.CollaboratorEmail == collaboratorEmail)
                 .ToListAsync();
+
         }
 
         public Task<bool> RemoveCollaborator(long noteId, string collaboratorEmail)

@@ -43,4 +43,13 @@ public class CollaboratorController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("shared-notes/{collaboratorEmail}")]
+    public async Task<IActionResult> GetSharedNotes(string collaboratorEmail)
+    {
+        var result = await _mediator.Send(
+            new GetSharedNotesQuery(collaboratorEmail));
+
+        return Ok(result);
+    }
 }
