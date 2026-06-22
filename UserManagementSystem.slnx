@@ -4,6 +4,12 @@
     <Project Path="src/ApiGateway/OcelotGateway/OcelotGateway.csproj" />
   </Folder>
   <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/CollaboratorService/">
+    <Project Path="src/Services/CollaboratorService/CollaboratorService.API/CollaboratorService.API.csproj" />
+    <Project Path="src/Services/CollaboratorService/CollaboratorService.Application/CollaboratorService.Application.csproj" />
+    <Project Path="src/Services/CollaboratorService/CollaboratorService.Domain/CollaboratorService.Domain.csproj" />
+    <Project Path="src/Services/CollaboratorService/CollaboratorService.Infrastructure/CollaboratorService.Infrastructure.csproj" />
+  </Folder>
   <Folder Name="/src/Services/NotesService/">
     <Project Path="src/Services/NotesService/NotesService.API/NotesService.API.csproj" />
     <Project Path="src/Services/NotesService/NotesService.Application/NotesService.Application.csproj" />
