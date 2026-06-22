@@ -2,22 +2,22 @@
 using NotesService.Application.Commands;
 using NotesService.Application.Interfaces;
 
-namespace NotesService.Application.Handlers
+namespace NotesService.Application.Handlers.CommandHandlers
 {
-    public class MoveToTrashHandler : IRequestHandler<MoveToTrashCommand, bool>
+    public class PinNoteHandler : IRequestHandler<PinNoteCommand, bool>
     {
         private readonly INoteRepository _noteRepository;
 
-        public MoveToTrashHandler(INoteRepository noteRepository)
+        public PinNoteHandler(INoteRepository noteRepository)
         {
             _noteRepository = noteRepository;
         }
 
         public async Task<bool> Handle(
-            MoveToTrashCommand request,
+            PinNoteCommand request,
             CancellationToken cancellationToken)
         {
-            return await _noteRepository.MoveToTrash(
+            return await _noteRepository.PinNote(
                 request.NoteId,
                 request.UserId);
         }

@@ -2,23 +2,22 @@
 using NotesService.Application.Commands;
 using NotesService.Application.Interfaces;
 
-namespace NotesService.Application.Handlers
+namespace NotesService.Application.Handlers.CommandHandlers
 {
-    public class RestoreNoteHandler
-        : IRequestHandler<RestoreNoteCommand, bool>
+    public class ArchiveNoteHandler : IRequestHandler<ArchiveNoteCommand, bool>
     {
         private readonly INoteRepository _noteRepository;
 
-        public RestoreNoteHandler(INoteRepository noteRepository)
+        public ArchiveNoteHandler(INoteRepository noteRepository)
         {
             _noteRepository = noteRepository;
         }
 
         public async Task<bool> Handle(
-            RestoreNoteCommand request,
+            ArchiveNoteCommand request,
             CancellationToken cancellationToken)
         {
-            return await _noteRepository.RestoreNote(
+            return await _noteRepository.ArchiveNote(
                 request.NoteId,
                 request.UserId);
         }

@@ -3,7 +3,7 @@ using NotesService.Application.Commands;
 using NotesService.Application.Interfaces;
 using NotesService.Domain.Entitites;
 
-namespace NotesService.Application.Handlers
+namespace NotesService.Application.Handlers.CommandHandlers
 {
     public class CreateNoteHandler : IRequestHandler<CreateNoteCommand, bool>
     {
