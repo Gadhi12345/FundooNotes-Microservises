@@ -2,23 +2,25 @@
 using NotesService.Application.Interfaces;
 using NotesService.Application.Queries;
 using NotesService.Domain.Entitites;
-namespace NotesService.Application.Handlers
+
+namespace NotesService.Application.Handlers.QueryHandlers
 {
-    public class GetMyNotesHandler :IRequestHandler<GetMyNotesQuery, List<Note>>
+    public class GetTrashedNotesHandler
+        : IRequestHandler<GetTrashedNotesQuery, List<Note>>
     {
         private readonly INoteRepository _noteRepository;
 
-        public GetMyNotesHandler(INoteRepository noteRepository)
+        public GetTrashedNotesHandler(INoteRepository noteRepository)
         {
             _noteRepository = noteRepository;
         }
 
         public async Task<List<Note>> Handle(
-            GetMyNotesQuery request,
+            GetTrashedNotesQuery request,
             CancellationToken cancellationToken)
         {
             return await _noteRepository
-                .GetNotesByUserId(request.UserId);
+                .GetTrashedNotes(request.UserId);
         }
     }
 }

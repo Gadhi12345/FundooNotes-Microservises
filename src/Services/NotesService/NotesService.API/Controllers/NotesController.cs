@@ -68,9 +68,7 @@ namespace NotesService.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateNote(
-    long id,
-    UpdateNoteRequest request)
+        public async Task<IActionResult> UpdateNote(long id,UpdateNoteRequest request)
         {
             var userId =
                 Convert.ToInt64(

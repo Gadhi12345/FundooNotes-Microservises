@@ -2,23 +2,22 @@
 using NotesService.Application.Commands;
 using NotesService.Application.Interfaces;
 
-namespace NotesService.Application.Handlers
+namespace NotesService.Application.Handlers.CommandHandlers
 {
-    public class PinNoteHandler
-        : IRequestHandler<PinNoteCommand, bool>
+    public class RestoreNoteHandler : IRequestHandler<RestoreNoteCommand, bool>
     {
         private readonly INoteRepository _noteRepository;
 
-        public PinNoteHandler(INoteRepository noteRepository)
+        public RestoreNoteHandler(INoteRepository noteRepository)
         {
             _noteRepository = noteRepository;
         }
 
         public async Task<bool> Handle(
-            PinNoteCommand request,
+            RestoreNoteCommand request,
             CancellationToken cancellationToken)
         {
-            return await _noteRepository.PinNote(
+            return await _noteRepository.RestoreNote(
                 request.NoteId,
                 request.UserId);
         }

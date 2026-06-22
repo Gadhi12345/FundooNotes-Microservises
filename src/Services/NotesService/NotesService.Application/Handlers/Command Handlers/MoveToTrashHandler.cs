@@ -2,22 +2,22 @@
 using NotesService.Application.Commands;
 using NotesService.Application.Interfaces;
 
-namespace NotesService.Application.Handlers
+namespace NotesService.Application.Handlers.CommandHandlers
 {
-    public class ArchiveNoteHandler : IRequestHandler<ArchiveNoteCommand, bool>
+    public class MoveToTrashHandler : IRequestHandler<MoveToTrashCommand, bool>
     {
         private readonly INoteRepository _noteRepository;
 
-        public ArchiveNoteHandler(INoteRepository noteRepository)
+        public MoveToTrashHandler(INoteRepository noteRepository)
         {
             _noteRepository = noteRepository;
         }
 
         public async Task<bool> Handle(
-            ArchiveNoteCommand request,
+            MoveToTrashCommand request,
             CancellationToken cancellationToken)
         {
-            return await _noteRepository.ArchiveNote(
+            return await _noteRepository.MoveToTrash(
                 request.NoteId,
                 request.UserId);
         }

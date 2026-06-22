@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NotesService.Application.Handlers;
+using NotesService.Application.Handlers.CommandHandlers;
 using NotesService.Application.Interfaces;
 using NotesService.Infrastructure.Data;
 using NotesService.Infrastructure.Repositories;

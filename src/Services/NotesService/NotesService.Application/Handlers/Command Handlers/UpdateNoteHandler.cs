@@ -2,10 +2,9 @@
 using NotesService.Application.Commands;
 using NotesService.Application.Interfaces;
 
-namespace NotesService.Application.Handlers
+namespace NotesService.Application.Handlers.CommandHandlers
 {
-    public class UpdateNoteHandler :
-        IRequestHandler<UpdateNoteCommand, bool>
+    public class UpdateNoteHandler : IRequestHandler<UpdateNoteCommand, bool>
     {
         private readonly INoteRepository _noteRepository;
 
@@ -14,9 +13,7 @@ namespace NotesService.Application.Handlers
             _noteRepository = noteRepository;
         }
 
-        public async Task<bool> Handle(
-            UpdateNoteCommand request,
-            CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateNoteCommand request, CancellationToken cancellationToken)
         {
             return await _noteRepository.UpdateNote(
                 request.NoteId,
