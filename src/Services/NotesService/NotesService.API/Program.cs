@@ -5,9 +5,11 @@ using Microsoft.IdentityModel.Tokens;
 using NotesService.Application.Handlers;
 using NotesService.Application.Handlers.CommandHandlers;
 using NotesService.Application.Interfaces;
+using NotesService.Infrastructure.Caching;
 using NotesService.Infrastructure.Data;
 using NotesService.Infrastructure.Repositories;
 using SharedLibrary.Exceptions;
+using StackExchange.Redis;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +42,10 @@ builder.Services.AddDbContext<NotesDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddSingleton<IConnectionMultiplexer>(
+    ConnectionMultiplexer.Connect(
+        builder.Configuration["Redis:ConnectionString"]));
+builder.Services.AddScoped<ICacheService, RedisCacheService>();
 // Add services to the container
 builder.Services.AddControllers();
 

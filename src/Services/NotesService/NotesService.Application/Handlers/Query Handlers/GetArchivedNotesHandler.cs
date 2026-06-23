@@ -9,18 +9,36 @@ namespace NotesService.Application.Handlers.QueryHandlers
         : IRequestHandler<GetArchivedNotesQuery, List<Note>>
     {
         private readonly INoteRepository _noteRepository;
-
-        public GetArchivedNotesHandler(INoteRepository noteRepository)
+        private readonly ICacheService _cacheService;
+        public GetArchivedNotesHandler(INoteRepository noteRepository, ICacheService cacheService)
         {
             _noteRepository = noteRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<List<Note>> Handle(
             GetArchivedNotesQuery request,
             CancellationToken cancellationToken)
         {
-            return await _noteRepository
-                .GetArchivedNotes(request.UserId);
+            var cacheKey = $"notes:{request.UserId}";
+
+            var cachedNotes =
+                await _cacheService.GetAsync<List<Note>>(cacheKey);
+
+            if (cachedNotes != null)
+            {
+                return cachedNotes;
+            }
+
+            var notes =
+                await _noteRepository.GetArchivedNotes(request.UserId);
+
+            await _cacheService.SetAsync(
+                cacheKey,
+                notes,
+                TimeSpan.FromMinutes(10));
+
+            return notes;
         }
     }
 }
