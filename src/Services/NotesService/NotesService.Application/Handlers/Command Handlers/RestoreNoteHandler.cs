@@ -7,19 +7,24 @@ namespace NotesService.Application.Handlers.CommandHandlers
     public class RestoreNoteHandler : IRequestHandler<RestoreNoteCommand, bool>
     {
         private readonly INoteRepository _noteRepository;
-
-        public RestoreNoteHandler(INoteRepository noteRepository)
+        private readonly ICacheService _cacheService;
+        public RestoreNoteHandler(INoteRepository noteRepository, ICacheService cacheService)
         {
             _noteRepository = noteRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<bool> Handle(
             RestoreNoteCommand request,
             CancellationToken cancellationToken)
         {
-            return await _noteRepository.RestoreNote(
-                request.NoteId,
-                request.UserId);
+            var result = await _noteRepository.RestoreNote(
+         request.NoteId,
+         request.UserId);
+
+            await _cacheService.RemoveAsync($"notes:{request.UserId}");
+
+            return result;
         }
     }
 }
