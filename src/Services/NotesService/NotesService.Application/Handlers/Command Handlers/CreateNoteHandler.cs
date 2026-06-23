@@ -8,10 +8,12 @@ namespace NotesService.Application.Handlers.CommandHandlers
     public class CreateNoteHandler : IRequestHandler<CreateNoteCommand, bool>
     {
         private readonly INoteRepository _noteRepository;
+        private readonly ICacheService _cacheService;
 
-        public CreateNoteHandler(INoteRepository noteRepository)
+        public CreateNoteHandler(INoteRepository noteRepository, ICacheService cacheService)
         {
             _noteRepository = noteRepository;
+            _cacheService = cacheService;
         }
 
         public async Task<bool> Handle(CreateNoteCommand request, CancellationToken cancellationToken)
@@ -23,7 +25,11 @@ namespace NotesService.Application.Handlers.CommandHandlers
                 UserId = request.UserId
             };
 
-            return await _noteRepository.CreateNote(note);
+            var result = await _noteRepository.CreateNote(note);
+
+            await _cacheService.RemoveAsync($"notes:{request.UserId}");
+
+            return result;
         }
     }
 }
