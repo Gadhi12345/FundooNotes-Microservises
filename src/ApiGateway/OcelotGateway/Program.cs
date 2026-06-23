@@ -7,11 +7,20 @@ builder.Configuration
        .AddJsonFile("ocelot.json",
                     optional: false,
                     reloadOnChange: true);
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("GatewayCorsPolicy", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 builder.Services.AddOcelot();
 
 var app = builder.Build();
-
+app.UseCors("GatewayCorsPolicy");
 await app.UseOcelot();
 
 app.Run();
